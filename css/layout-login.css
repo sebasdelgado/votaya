@@ -1,0 +1,83 @@
+/* ════════════════════════════════════════════════
+   LAYOUT LOGIN / INGRESO — pantalla centrada
+   ════════════════════════════════════════════════ */
+
+.layout-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--fondo);
+  padding: 20px;
+}
+.layout-login-columna { flex-direction: column; }
+.login-card {
+  background: var(--blanco);
+  border: 0.5px solid var(--borde);
+  border-radius: var(--radio-xl);
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 400px;
+}
+.login-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.login-logo-icono {
+  width: 44px; height: 44px;
+  background: var(--acento);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 22px;
+}
+.login-logo-texto {
+  font-family: var(--font-titulo);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--texto);
+}
+.login-logo-texto span { color: var(--acento); }
+.login-subtitulo { font-size: 13px; color: var(--texto-muted); margin-bottom: 24px; }
+
+/* Ingreso votante por documento */
+.doc-icono {
+  width: 72px; height: 72px;
+  background: var(--acento);
+  border-radius: 20px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 36px;
+  margin: 0 auto 20px;
+}
+.doc-titulo {
+  font-family: var(--font-titulo);
+  font-size: 28px;
+  color: var(--texto);
+  margin-bottom: 6px;
+  text-align: center;
+}
+.doc-subtitulo {
+  font-size: 14px;
+  color: var(--texto-muted);
+  margin-bottom: 28px;
+  text-align: center;
+}
+.doc-input {
+  width: 100%;
+  background: var(--blanco);
+  border: 2px solid var(--borde);
+  border-radius: var(--radio-lg);
+  padding: 14px 18px;
+  font-size: 22px;
+  font-family: var(--font-titulo);
+  color: var(--texto);
+  text-align: center;
+  letter-spacing: 0.08em;
+  outline: none;
+  transition: border-color 0.15s;
+  margin-bottom: 12px;
+}
+.doc-input:focus { border-color: var(--acento); }
+.doc-form { width: 100%; max-width: 360px; }
+.doc-nota { font-size: 12px; color: var(--texto-muted); }

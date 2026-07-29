@@ -1,0 +1,45 @@
+/* ════════════════════════════════════════════════
+   ENCUESTAS — tarjetas de la lista de encuestas
+   ════════════════════════════════════════════════ */
+
+/* Tarjeta de encuesta */
+.enc-card {
+  background: var(--blanco); border: 0.5px solid var(--borde);
+  border-radius: var(--radio-lg); padding: 20px; margin-bottom: 14px;
+  transition: border-color 0.15s;
+}
+.enc-card:hover { border-color: var(--acento-borde); }
+.enc-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+.enc-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.enc-titulo { font-family: var(--font-titulo); font-size: 17px; font-weight: 700; color: var(--texto); margin-bottom: 4px; }
+.enc-desc   { font-size: 13px; color: var(--texto-muted); margin-bottom: 14px; }
+.enc-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 14px; padding-top: 12px; border-top: 0.5px solid var(--borde-suave);
+}
+.enc-fecha { font-size: 13px; color: var(--texto-muted); display: flex; align-items: center; gap: 5px; }
+
+/* Candidatos mini — vista previa en la tarjeta de encuesta */
+.cands-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+.cand-mini {
+  background: var(--fondo); border: 0.5px solid var(--borde);
+  border-radius: var(--radio-md); padding: 10px 12px;
+  display: flex; align-items: center; gap: 8px;
+  flex: 1; min-width: 120px;
+}
+.cand-av {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--acento); color: #fff;
+  font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.cand-nom { font-size: 13px; font-weight: 500; color: var(--texto); }
+.cand-lst { font-size: 12px; color: var(--texto-muted); }
+
+/* Opciones de texto — vista previa en la tarjeta de encuesta */
+.opciones-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 4px; }
+.opcion-pill {
+  background: var(--fondo); border: 0.5px solid var(--borde);
+  border-radius: var(--radio-sm); padding: 5px 12px;
+  font-size: 12px; color: var(--texto-suave);
+}

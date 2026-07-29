@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VotaYa — Resultados</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/componentes.css">
+  <link rel="stylesheet" href="../css/layout-votante.css">
+  <link rel="stylesheet" href="../css/resultados.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+</head>
+<body class="layout-votante">
+
+  <nav class="topbar-votante">
+    <span class="topbar-logo">Vota<span>Ya</span></span>
+    <div class="topbar-derecha">
+      <div class="avatar" id="topbar-avatar">--</div>
+      <span class="topbar-nombre" id="topbar-usuario"></span>
+      <button id="btn-cerrar-sesion" class="btn-salir">
+        <i class="ti ti-logout"></i> Salir
+      </button>
+    </div>
+  </nav>
+
+  <div class="votante-body">
+    <div class="votante-contenido">
+
+      <a href="encuestas.html" class="link-volver">
+        <i class="ti ti-arrow-left"></i> Volver a encuestas
+      </a>
+
+      <div class="pagina-header">
+        <h2 id="enc-titulo">Cargando...</h2>
+        <p id="enc-desc"></p>
+      </div>
+
+      <div id="stats-resultados" class="stats-grid"></div>
+
+      <div class="card">
+        <h3 class="mb-16">Resultados</h3>
+        <div id="grafica-resultados">
+          <div class="cargando"><i class="ti ti-loader"></i> Cargando resultados...</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/resultados.js"></script>
+</body>
+</html>

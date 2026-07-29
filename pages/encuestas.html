@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VotaYa — Encuestas</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/componentes.css">
+  <link rel="stylesheet" href="../css/layout-votante.css">
+  <link rel="stylesheet" href="../css/encuestas.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+</head>
+<body class="layout-votante">
+
+  <nav class="topbar-votante">
+    <span class="topbar-logo">Vota<span>Ya</span></span>
+    <div class="topbar-derecha">
+      <div class="avatar" id="topbar-avatar">--</div>
+      <span class="topbar-nombre" id="topbar-usuario"></span>
+      <button id="btn-cerrar-sesion" class="btn-salir">
+        <i class="ti ti-logout"></i> Salir
+      </button>
+    </div>
+  </nav>
+
+  <div class="votante-body">
+    <div class="votante-contenido">
+      <div class="pagina-header">
+        <h2>Encuestas disponibles</h2>
+        <p>Participa en las votaciones activas de tu institución</p>
+      </div>
+      <div id="lista-encuestas">
+        <div class="cargando"><i class="ti ti-loader"></i> Cargando encuestas...</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/encuestas.js"></script>
+</body>
+</html>

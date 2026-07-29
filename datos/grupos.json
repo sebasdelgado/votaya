@@ -1,0 +1,11 @@
+[
+  { "id": 1, "nombre": "Décimo A",  "grado": "Décimo" },
+  { "id": 2, "nombre": "Décimo B",  "grado": "Décimo" },
+  { "id": 3, "nombre": "Once A",    "grado": "Once" },
+  { "id": 4, "nombre": "Once B",    "grado": "Once" },
+  { "id": 5, "nombre": "Noveno A",  "grado": "Noveno" },
+  { "id": 6, "nombre": "Noveno B",  "grado": "Noveno" },
+  { "id": 7, "nombre": "Octavo A",  "grado": "Octavo" },
+  { "id": 8, "nombre": "Séptimo A", "grado": "Séptimo" },
+  { "id": 9, "nombre": "Sexto A",   "grado": "Sexto" }
+]

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VotaYa — Votar</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/componentes.css">
+  <link rel="stylesheet" href="../css/layout-votante.css">
+  <link rel="stylesheet" href="../css/votar.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+</head>
+<body class="layout-votante">
+
+  <nav class="topbar-votante">
+    <span class="topbar-logo">Vota<span>Ya</span></span>
+    <div class="topbar-derecha">
+      <div class="avatar" id="topbar-avatar">--</div>
+      <span class="topbar-nombre" id="topbar-usuario"></span>
+      <button id="btn-cerrar-sesion" class="btn-salir">
+        <i class="ti ti-logout"></i> Salir
+      </button>
+    </div>
+  </nav>
+
+  <div class="votante-body">
+    <div class="votante-contenido">
+
+      <a href="encuestas.html" class="link-volver">
+        <i class="ti ti-arrow-left"></i> Volver a encuestas
+      </a>
+
+      <div class="pagina-header">
+        <h2 id="enc-titulo">Cargando...</h2>
+        <p id="enc-desc"></p>
+      </div>
+
+      <div id="alerta-voto" class="alerta alerta-oculta"></div>
+
+      <div id="opciones-voto">
+        <div class="cargando"><i class="ti ti-loader"></i> Cargando opciones...</div>
+      </div>
+
+      <div id="panel-votar" class="oculto">
+        <button id="btn-confirmar-voto" class="btn btn-primario btn-bloque mt-16">
+          <i class="ti ti-check"></i> Confirmar mi voto
+        </button>
+        <p class="texto-muted texto-centro mt-8">Tu voto es secreto y no puede modificarse después.</p>
+      </div>
+
+      <div id="confirmacion" class="card confirmacion-voto oculto">
+        <i class="ti ti-circle-check"></i>
+        <h3>¡Voto registrado!</h3>
+        <p>Tu voto ha sido guardado correctamente.</p>
+        <div class="confirmacion-botones">
+          <a href="resultados.html" id="btn-ver-resultados" class="btn btn-secundario">
+            <i class="ti ti-chart-bar"></i> Ver resultados
+          </a>
+          <a href="encuestas.html" class="btn btn-primario">
+            <i class="ti ti-list"></i> Ver más encuestas
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <template id="tpl-opcion-candidato">
+    <div class="opcion-voto">
+      <input type="radio" name="voto" class="opcion-radio">
+      <div class="cand-foto-grande campo-iniciales"></div>
+      <div class="opcion-voto-info">
+        <div class="opcion-voto-nombre campo-nombre"></div>
+        <div class="opcion-voto-sub campo-lista"></div>
+        <div class="opcion-voto-sub mt-4 campo-propuesta"></div>
+      </div>
+    </div>
+  </template>
+
+  <template id="tpl-opcion-texto">
+    <div class="opcion-voto">
+      <input type="radio" name="voto" class="opcion-radio">
+      <div class="opcion-voto-info">
+        <div class="opcion-voto-nombre campo-nombre"></div>
+      </div>
+    </div>
+  </template>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/votar.js"></script>
+</body>
+</html>

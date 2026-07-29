@@ -1,0 +1,7 @@
+[
+  { "id": 1, "numero_documento": "1005234567", "nombre": "María", "apellido": "García", "fecha_nacimiento": "2008-03-15", "genero": "femenino", "jornada": "mañana", "grupo_id": 1 },
+  { "id": 2, "numero_documento": "1005234568", "nombre": "Juan", "apellido": "Pérez", "fecha_nacimiento": "2007-11-22", "genero": "masculino", "jornada": "tarde", "grupo_id": 2 },
+  { "id": 3, "numero_documento": "1005234569", "nombre": "Ana", "apellido": "López", "fecha_nacimiento": "2008-06-10", "genero": "femenino", "jornada": "mañana", "grupo_id": 1 },
+  { "id": 4, "numero_documento": "1005234570", "nombre": "Carlos", "apellido": "Ruiz", "fecha_nacimiento": "2007-09-05", "genero": "masculino", "jornada": "mañana", "grupo_id": 3 },
+  { "id": 5, "numero_documento": "1005234571", "nombre": "Laura", "apellido": "Martínez", "fecha_nacimiento": "2009-01-30", "genero": "femenino", "jornada": "tarde", "grupo_id": 4 }
+]

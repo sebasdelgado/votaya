@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VotaYa — Panel admin</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/componentes.css">
+  <link rel="stylesheet" href="../css/layout-admin.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+</head>
+<body class="layout-admin">
+
+  <nav class="topbar-admin">
+    <div class="topbar-admin-izq">
+      <span class="topbar-logo">Vota<span>Ya</span></span>
+      <span class="topbar-admin-badge">Administrador</span>
+    </div>
+  </nav>
+
+  <aside class="sidebar">
+    <p class="sidebar-seccion">Principal</p>
+    <a href="admin-panel.html" class="sidebar-link activo">
+      <i class="ti ti-layout-dashboard"></i> Panel
+    </a>
+    <p class="sidebar-seccion">Gestión</p>
+    <a href="admin-encuesta-nueva.html" class="sidebar-link">
+      <i class="ti ti-plus"></i> Nueva encuesta
+    </a>
+    <a href="admin-candidatos.html" class="sidebar-link">
+      <i class="ti ti-user-star"></i> Candidatos
+    </a>
+    <a href="admin-votantes.html" class="sidebar-link">
+      <i class="ti ti-id-badge"></i> Votantes
+    </a>
+    <div class="sidebar-footer">
+      <button id="btn-cerrar-sesion" class="btn btn-xs btn-peligro btn-bloque">
+        <i class="ti ti-logout"></i> Cerrar sesión
+      </button>
+    </div>
+  </aside>
+
+  <main class="admin-body">
+    <div class="admin-contenido">
+
+      <div class="pagina-header-fila">
+        <div>
+          <h2>Panel de administración</h2>
+          <p>Resumen general del sistema de votaciones</p>
+        </div>
+        <a href="admin-encuesta-nueva.html" class="btn btn-primario btn-sm">
+          <i class="ti ti-plus"></i> Nueva encuesta
+        </a>
+      </div>
+
+      <div id="stats-panel" class="stats-grid"></div>
+
+      <div class="card">
+        <div class="flex-entre mb-16">
+          <h3>Todas las encuestas</h3>
+        </div>
+        <div class="tabla-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Encuesta</th>
+                <th>Tipo</th>
+                <th>Estado</th>
+                <th>Votos</th>
+                <th>Cierre</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-encuestas">
+              <tr><td colspan="6" class="cargando">Cargando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <template id="tpl-stat-card">
+    <div class="stat-card">
+      <div class="stat-label campo-label"></div>
+      <div class="stat-valor campo-valor"></div>
+    </div>
+  </template>
+
+  <template id="tpl-fila-encuesta">
+    <tr>
+      <td class="td-nombre campo-titulo"></td>
+      <td><span class="badge badge-tipo campo-tipo"></span></td>
+      <td class="campo-estado"></td>
+      <td class="campo-votos"></td>
+      <td class="campo-cierre"></td>
+      <td>
+        <div class="acciones">
+          <a class="btn btn-xs btn-secundario enlace-resultados">
+            <i class="ti ti-chart-bar"></i> Resultados
+          </a>
+          <button class="btn btn-xs btn-alerta btn-cerrar-encuesta">
+            <i class="ti ti-lock"></i> Cerrar
+          </button>
+          <button class="btn btn-xs btn-peligro btn-eliminar-encuesta">
+            <i class="ti ti-trash"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
+  </template>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/admin-panel.js"></script>
+</body>
+</html>

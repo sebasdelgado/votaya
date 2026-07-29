@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "titulo": "Elección de personero estudiantil 2025",
+    "descripcion": "Elige al representante estudiantil para el año lectivo 2025.",
+    "tipo": "candidatos",
+    "estado": "activa",
+    "fecha_inicio": "2025-05-01",
+    "fecha_fin": "2025-05-30",
+    "opciones": [
+      { "id": 1, "candidato_id": 1, "texto_opcion": null },
+      { "id": 2, "candidato_id": 2, "texto_opcion": null },
+      { "id": 3, "candidato_id": 3, "texto_opcion": null }
+    ]
+  },
+  {
+    "id": 2,
+    "titulo": "¿Qué actividad prefieres para el día del estudiante?",
+    "descripcion": "Cuéntanos qué actividad te gustaría que organizara el colegio.",
+    "tipo": "texto",
+    "estado": "activa",
+    "fecha_inicio": "2025-05-15",
+    "fecha_fin": "2025-06-02",
+    "opciones": [
+      { "id": 4, "candidato_id": null, "texto_opcion": "Paseo ecológico" },
+      { "id": 5, "candidato_id": null, "texto_opcion": "Torneo deportivo" },
+      { "id": 6, "candidato_id": null, "texto_opcion": "Fiesta en el colegio" },
+      { "id": 7, "candidato_id": null, "texto_opcion": "Día de juegos" }
+    ]
+  },
+  {
+    "id": 3,
+    "titulo": "Representante de grado décimo",
+    "descripcion": "Votación para elegir el representante del grado décimo.",
+    "tipo": "candidatos",
+    "estado": "cerrada",
+    "fecha_inicio": "2025-04-01",
+    "fecha_fin": "2025-04-20",
+    "opciones": [
+      { "id": 8, "candidato_id": 1, "texto_opcion": null },
+      { "id": 9, "candidato_id": 2, "texto_opcion": null }
+    ]
+  }
+]

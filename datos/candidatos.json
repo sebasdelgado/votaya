@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "nombre": "Juan",
+    "apellido": "Pérez",
+    "numero_lista": "1",
+    "propuesta": "Mejorar los espacios deportivos y promover torneos inter-clases cada mes.",
+    "foto": ""
+  },
+  {
+    "id": 2,
+    "nombre": "Ana",
+    "apellido": "López",
+    "numero_lista": "2",
+    "propuesta": "Crear una biblioteca digital con recursos para todas las materias.",
+    "foto": ""
+  },
+  {
+    "id": 3,
+    "nombre": "Carlos",
+    "apellido": "Ruiz",
+    "numero_lista": "3",
+    "propuesta": "Implementar jornadas de reciclaje y huerta escolar para toda la comunidad.",
+    "foto": ""
+  }
+]

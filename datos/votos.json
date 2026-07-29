@@ -1,0 +1,7 @@
+[
+  { "id": 1, "usuario_id": 1, "encuesta_id": 3, "opcion_id": 8,  "fecha_voto": "2025-04-10T09:15:00" },
+  { "id": 2, "usuario_id": 2, "encuesta_id": 3, "opcion_id": 9,  "fecha_voto": "2025-04-10T10:02:00" },
+  { "id": 3, "usuario_id": 3, "encuesta_id": 3, "opcion_id": 8,  "fecha_voto": "2025-04-11T08:45:00" },
+  { "id": 4, "usuario_id": 4, "encuesta_id": 3, "opcion_id": 8,  "fecha_voto": "2025-04-11T11:30:00" },
+  { "id": 5, "usuario_id": 5, "encuesta_id": 3, "opcion_id": 9,  "fecha_voto": "2025-04-12T14:00:00" }
+]

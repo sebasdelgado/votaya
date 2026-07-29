@@ -1,0 +1,11 @@
+/* ════════════════════════════════════════════════
+   RESULTADOS — gráfica de barras
+   ════════════════════════════════════════════════ */
+
+.barra-wrap { margin-bottom: 14px; }
+.barra-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 5px; }
+.barra-label span:first-child { font-weight: 500; color: var(--texto); }
+.barra-label span:last-child  { color: var(--texto-muted); }
+.barra-bg   { background: var(--fondo); border-radius: 99px; height: 12px; overflow: hidden; }
+.barra-fill { height: 100%; background: var(--acento); border-radius: 99px; transition: width 0.6s ease; }
+.barra-fill.ganador { background: var(--acento-hover); }

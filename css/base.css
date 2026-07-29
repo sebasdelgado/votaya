@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap');
+
+/* ── Variables ────────────────────────────────── */
+:root {
+  --acento:        #0369a1;
+  --acento-hover:  #0284c7;
+  --acento-claro:  #e0f2fe;
+  --acento-borde:  #7dd3fc;
+  --fondo:         #f8fafc;
+  --fondo-2:       #f0f9ff;
+  --blanco:        #ffffff;
+  --texto:         #0c4a6e;
+  --texto-suave:   #475569;
+  --texto-muted:   #94a3b8;
+  --borde:         #bae6fd;
+  --borde-suave:   #e0f2fe;
+  --error-fondo:   #fef2f2;
+  --error-borde:   #fecaca;
+  --error-texto:   #dc2626;
+  --exito-fondo:   #f0fdf4;
+  --exito-borde:   #86efac;
+  --exito-texto:   #16a34a;
+  --alerta-fondo:  #fffbeb;
+  --alerta-borde:  #fde68a;
+  --alerta-texto:  #d97706;
+  --radio-sm:      6px;
+  --radio-md:      10px;
+  --radio-lg:      14px;
+  --radio-xl:      18px;
+  --sidebar-w:     240px;
+  --topbar-h:      56px;
+  --font-titulo:   'Syne', sans-serif;
+  --font-cuerpo:   'DM Sans', sans-serif;
+}
+
+/* ── Reset ────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-cuerpo);
+  background: var(--fondo);
+  color: var(--texto);
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── Tipografía ───────────────────────────────── */
+h1, h2, h3, h4 { font-family: var(--font-titulo); font-weight: 700; color: var(--texto); }
+h1 { font-size: 28px; }
+h2 { font-size: 22px; }
+h3 { font-size: 18px; }
+h4 { font-size: 15px; }
+p  { color: var(--texto-suave); }
+a  { color: var(--acento); text-decoration: none; }
+a:hover { text-decoration: underline; }

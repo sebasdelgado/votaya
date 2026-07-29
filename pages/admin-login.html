@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VotaYa — Acceso administrador</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/componentes.css">
+  <link rel="stylesheet" href="../css/layout-login.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+</head>
+<body>
+  <div class="layout-login">
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="login-logo-icono"><i class="ti ti-shield-check"></i></div>
+        <span class="login-logo-texto">Vota<span>Ya</span></span>
+      </div>
+      <h2>Acceso administrador</h2>
+      <p class="login-subtitulo">Ingresa tus credenciales para gestionar el sistema</p>
+      <div id="alerta-admin" class="alerta alerta-oculta"></div>
+      <div class="form-grupo">
+        <label for="correo">Correo electrónico</label>
+        <div class="form-input-icono">
+          <i class="ti ti-mail icono"></i>
+          <input type="email" id="correo" class="form-input" placeholder="admin@colegio.edu.co">
+        </div>
+      </div>
+      <div class="form-grupo">
+        <label for="contrasena">Contraseña</label>
+        <div class="form-input-icono">
+          <i class="ti ti-lock icono"></i>
+          <input type="password" id="contrasena" class="form-input" placeholder="••••••••">
+        </div>
+      </div>
+      <button id="btn-login-admin" class="btn btn-primario btn-bloque mt-8">
+        <i class="ti ti-login"></i> Ingresar
+      </button>
+      <hr class="separador">
+      <p class="texto-centro texto-muted">
+        <a href="../index.html" class="link-volver">
+          <i class="ti ti-arrow-left"></i> Volver al ingreso de votantes
+        </a>
+      </p>
+    </div>
+  </div>
+  <script src="../js/app.js"></script>
+  <script src="../js/admin-login.js"></script>
+</body>
+</html>
