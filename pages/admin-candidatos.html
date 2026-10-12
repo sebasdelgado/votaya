@@ -4,83 +4,66 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VotaYa — Candidatos</title>
-  <link rel="stylesheet" href="../css/base.css">
-  <link rel="stylesheet" href="../css/componentes.css">
-  <link rel="stylesheet" href="../css/layout-admin.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../js/tailwind-config.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/componentes.css">
 </head>
-<body class="layout-admin">
+<body class="pagina flex flex-col">
 
-  <nav class="topbar-admin">
-    <div class="topbar-admin-izq">
-      <span class="topbar-logo">Vota<span>Ya</span></span>
-      <span class="topbar-admin-badge">Administrador</span>
-    </div>
-  </nav>
+  <div id="topbar"></div>
+  <div id="sidebar"></div>
 
-  <aside class="sidebar">
-    <p class="sidebar-seccion">Principal</p>
-    <a href="admin-panel.html" class="sidebar-link">
-      <i class="ti ti-layout-dashboard"></i> Panel
-    </a>
-    <p class="sidebar-seccion">Gestión</p>
-    <a href="admin-encuesta-nueva.html" class="sidebar-link">
-      <i class="ti ti-plus"></i> Nueva encuesta
-    </a>
-    <a href="admin-candidatos.html" class="sidebar-link activo">
-      <i class="ti ti-user-star"></i> Candidatos
-    </a>
-    <a href="admin-votantes.html" class="sidebar-link">
-      <i class="ti ti-id-badge"></i> Votantes
-    </a>
-    <div class="sidebar-footer">
-      <button id="btn-cerrar-sesion" class="btn btn-xs btn-peligro btn-bloque">
-        <i class="ti ti-logout"></i> Cerrar sesión
-      </button>
-    </div>
-  </aside>
+  <main class="main-admin ml-0 md:ml-sidebar-w">
+    <div class="py-5 px-3.5 md:py-7 md:px-10 max-w-[1400px]">
 
-  <main class="admin-body">
-    <div class="admin-contenido">
-
-      <div class="pagina-header">
-        <h2>Gestión de candidatos</h2>
-        <p>Registra los candidatos que participarán en las votaciones</p>
+      <div class="mb-6">
+        <h2 class="font-titulo font-bold text-texto text-xl mb-1">Gestión de candidatos</h2>
+        <p class="text-sm text-texto-muted">Registra los candidatos que participarán en las votaciones</p>
       </div>
 
-      <div id="alerta-candidato" class="alerta alerta-oculta"></div>
+      <div id="alerta-candidato" class="hidden"></div>
 
-      <div class="grid-2">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
 
         <div class="card">
-          <h3 class="mb-16">Registrar candidato</h3>
-          <div class="form-grupo">
-            <label for="cand-nombre">Nombre</label>
-            <input type="text" id="cand-nombre" class="form-input" placeholder="Ej: Juan">
+          <h3 class="font-titulo font-bold text-texto text-lg mb-4">Registrar candidato</h3>
+          <div class="mb-4">
+            <label for="cand-nombre" class="label">Nombre</label>
+            <input type="text" id="cand-nombre" placeholder="Ej: Juan" class="input">
           </div>
-          <div class="form-grupo">
-            <label for="cand-apellido">Apellido</label>
-            <input type="text" id="cand-apellido" class="form-input" placeholder="Ej: Pérez">
+          <div class="mb-4">
+            <label for="cand-apellido" class="label">Apellido</label>
+            <input type="text" id="cand-apellido" placeholder="Ej: Pérez" class="input">
           </div>
-          <div class="form-grupo">
-            <label for="cand-lista">Número de lista</label>
-            <input type="text" id="cand-lista" class="form-input" placeholder="Ej: 1">
+          <div class="mb-4">
+            <label for="cand-lista" class="label">Número de lista</label>
+            <input type="text" id="cand-lista" placeholder="Ej: 1" class="input">
           </div>
-          <div class="form-grupo">
-            <label for="cand-propuesta">Propuesta</label>
-            <textarea id="cand-propuesta" class="form-textarea" placeholder="Describe brevemente la propuesta del candidato..."></textarea>
+          <div class="mb-4">
+            <label for="cand-propuesta" class="label">Propuesta</label>
+            <textarea id="cand-propuesta" placeholder="Describe brevemente la propuesta del candidato..." class="input resize-y min-h-[90px]"></textarea>
           </div>
-          <div class="form-grupo">
-            <label for="cand-foto">Foto (URL opcional)</label>
-            <input type="text" id="cand-foto" class="form-input" placeholder="https://...">
+          <div class="mb-4">
+            <label for="cand-foto" class="label">Nombre de la foto con extensión (opcional)</label>
+            <div class="flex items-center gap-3">
+              <img id="cand-foto-preview" class="hidden avatar-foto w-14 h-14">
+              <input type="text" id="cand-foto" placeholder="juan-perez.jpg" class="input">
+            </div>
+            <p class="text-xs text-texto-muted mt-1.5">
+              Copia la foto en la carpeta <code>votaya/img/candidatos/</code> y escribe aquí solo el nombre del archivo.
+            </p>
           </div>
-          <button id="btn-registrar-candidato" class="btn btn-primario btn-bloque">
+          <button id="btn-registrar-candidato" class="btn btn-primario w-full justify-center">
             <i class="ti ti-user-plus"></i> Registrar candidato
           </button>
         </div>
 
         <div class="card">
-          <h3 class="mb-16">Candidatos registrados</h3>
+          <h3 class="font-titulo font-bold text-texto text-lg mb-4">Candidatos registrados</h3>
           <div id="lista-candidatos">
             <div class="cargando"><i class="ti ti-loader"></i> Cargando...</div>
           </div>
@@ -91,14 +74,14 @@
   </main>
 
   <template id="tpl-candidato-card">
-    <div class="cand-card-grande">
-      <div class="cand-av-grande"></div>
-      <div class="cand-info-grande" style="flex:1;">
-        <h4 class="campo-nombre"></h4>
-        <p class="lista campo-lista"></p>
-        <p class="propuesta campo-propuesta"></p>
+    <div class="card card-chico flex gap-4 items-start mb-2.5">
+      <div class="cand-av-grande avatar w-14 h-14 text-lg"></div>
+      <div class="flex-1">
+        <h4 class="campo-nombre font-titulo font-bold text-[15px] text-texto mb-0.5"></h4>
+        <p class="campo-lista text-xs text-texto-muted mb-1.5"></p>
+        <p class="campo-propuesta text-sm text-texto-suave leading-normal"></p>
       </div>
-      <button class="btn btn-xs btn-peligro btn-eliminar-candidato">
+      <button class="btn-eliminar-candidato btn btn-chico btn-peligro">
         <i class="ti ti-trash"></i>
       </button>
     </div>

@@ -4,98 +4,75 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VotaYa — Nueva encuesta</title>
-  <link rel="stylesheet" href="../css/base.css">
-  <link rel="stylesheet" href="../css/componentes.css">
-  <link rel="stylesheet" href="../css/layout-admin.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../js/tailwind-config.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/componentes.css">
 </head>
-<body class="layout-admin">
+<body class="pagina flex flex-col">
 
-  <nav class="topbar-admin">
-    <div class="topbar-admin-izq">
-      <span class="topbar-logo">Vota<span>Ya</span></span>
-      <span class="topbar-admin-badge">Administrador</span>
-    </div>
-  </nav>
+  <div id="topbar"></div>
+  <div id="sidebar"></div>
 
-  <aside class="sidebar">
-    <p class="sidebar-seccion">Principal</p>
-    <a href="admin-panel.html" class="sidebar-link">
-      <i class="ti ti-layout-dashboard"></i> Panel
-    </a>
-    <p class="sidebar-seccion">Gestión</p>
-    <a href="admin-encuesta-nueva.html" class="sidebar-link activo">
-      <i class="ti ti-plus"></i> Nueva encuesta
-    </a>
-    <a href="admin-candidatos.html" class="sidebar-link">
-      <i class="ti ti-user-star"></i> Candidatos
-    </a>
-    <a href="admin-votantes.html" class="sidebar-link">
-      <i class="ti ti-id-badge"></i> Votantes
-    </a>
-    <div class="sidebar-footer">
-      <button id="btn-cerrar-sesion" class="btn btn-xs btn-peligro btn-bloque">
-        <i class="ti ti-logout"></i> Cerrar sesión
-      </button>
-    </div>
-  </aside>
+  <main class="main-admin ml-0 md:ml-sidebar-w">
+    <div class="py-5 px-3.5 md:py-7 md:px-10 max-w-[900px]">
 
-  <main class="admin-body">
-    <div class="admin-contenido admin-contenido-estrecho">
-
-      <div class="pagina-header">
-        <h2>Crear nueva encuesta</h2>
-        <p>Configura los datos de la votación o encuesta</p>
+      <div class="mb-6">
+        <h2 class="font-titulo font-bold text-texto text-xl mb-1">Crear nueva encuesta</h2>
+        <p class="text-sm text-texto-muted">Configura los datos de la votación o encuesta</p>
       </div>
 
       <div class="card">
-        <div id="alerta-encuesta" class="alerta alerta-oculta"></div>
+        <div id="alerta-encuesta" class="hidden"></div>
 
-        <div class="form-grupo">
-          <label for="enc-titulo">Título</label>
-          <input type="text" id="enc-titulo" class="form-input" placeholder="Ej: Elección de personero estudiantil 2025">
+        <div class="mb-4">
+          <label for="enc-titulo" class="label">Título</label>
+          <input type="text" id="enc-titulo" placeholder="Ej: Elección de personero estudiantil 2025" class="input">
         </div>
-        <div class="form-grupo">
-          <label for="enc-desc">Descripción</label>
-          <textarea id="enc-desc" class="form-textarea" placeholder="Describe brevemente el propósito de esta votación..."></textarea>
+        <div class="mb-4">
+          <label for="enc-desc" class="label">Descripción</label>
+          <textarea id="enc-desc" placeholder="Describe brevemente el propósito de esta votación..." class="input resize-y min-h-[90px]"></textarea>
         </div>
-        <div class="form-fila">
-          <div class="form-grupo">
-            <label for="enc-tipo">Tipo de encuesta</label>
-            <select id="enc-tipo" class="form-select">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="mb-4">
+            <label for="enc-tipo" class="label">Tipo de encuesta</label>
+            <select id="enc-tipo" class="input">
               <option value="candidatos">Con candidatos</option>
               <option value="texto">Opciones de texto</option>
             </select>
           </div>
-          <div class="form-grupo">
-            <label for="enc-fecha-fin">Fecha de cierre</label>
-            <input type="date" id="enc-fecha-fin" class="form-input">
+          <div class="mb-4">
+            <label for="enc-fecha-fin" class="label">Fecha de cierre</label>
+            <input type="date" id="enc-fecha-fin" class="input">
           </div>
         </div>
 
         <hr class="separador">
 
         <div id="seccion-candidatos">
-          <h3 class="mb-16">Seleccionar candidatos</h3>
+          <h3 class="font-titulo font-bold text-texto text-lg mb-4">Seleccionar candidatos</h3>
           <div id="lista-candidatos-check">
             <div class="cargando"><i class="ti ti-loader"></i> Cargando candidatos...</div>
           </div>
-          <p class="texto-muted mt-8 texto-xs">
-            ¿No encuentras el candidato? <a href="admin-candidatos.html">Registrarlo aquí</a>
+          <p class="text-texto-muted text-xs mt-2">
+            ¿No encuentras el candidato? <a href="admin-candidatos.html" class="text-acento hover:underline">Registrarlo aquí</a>
           </p>
         </div>
 
-        <div id="seccion-texto" class="oculto">
-          <h3 class="mb-16">Opciones de respuesta</h3>
+        <div id="seccion-texto" class="hidden">
+          <h3 class="font-titulo font-bold text-texto text-lg mb-4">Opciones de respuesta</h3>
           <div id="opciones-texto"></div>
-          <button id="btn-agregar-opcion" class="btn btn-secundario btn-sm mt-8">
+          <button id="btn-agregar-opcion" class="btn btn-suave mt-2">
             <i class="ti ti-plus"></i> Agregar opción
           </button>
         </div>
 
         <hr class="separador">
 
-        <button id="btn-crear-encuesta" class="btn btn-primario btn-bloque">
+        <button id="btn-crear-encuesta" class="btn btn-primario w-full justify-center">
           <i class="ti ti-check"></i> Crear encuesta
         </button>
       </div>
@@ -104,20 +81,20 @@
   </main>
 
   <template id="tpl-candidato-check">
-    <label style="display:flex; align-items:center; gap:12px; padding:10px; border:0.5px solid var(--borde); border-radius:var(--radio-md); margin-bottom:8px; cursor:pointer;">
-      <input type="checkbox" class="check-candidato" style="accent-color:var(--acento); width:16px; height:16px;">
-      <div class="cand-av campo-iniciales" style="width:32px;height:32px;font-size:11px;"></div>
+    <label class="candidato-check">
+      <input type="checkbox" class="check-candidato accent-acento w-4 h-4">
+      <div class="campo-iniciales avatar w-8 h-8 text-[11px]"></div>
       <div>
-        <div class="campo-nombre" style="font-weight:500; font-size:14px; color:var(--texto);"></div>
-        <div class="campo-lista" style="font-size:12px; color:var(--texto-muted);"></div>
+        <div class="campo-nombre font-medium text-sm text-texto"></div>
+        <div class="campo-lista text-xs text-texto-muted"></div>
       </div>
     </label>
   </template>
 
   <template id="tpl-opcion-texto-input">
-    <div style="display:flex; gap:8px; align-items:center; margin-bottom:8px;">
-      <input type="text" class="form-input opcion-texto">
-      <button class="btn btn-xs btn-peligro btn-quitar-opcion">
+    <div class="flex gap-2 items-center mb-2">
+      <input type="text" class="opcion-texto input flex-1">
+      <button class="btn-quitar-opcion btn btn-chico btn-peligro">
         <i class="ti ti-x"></i>
       </button>
     </div>

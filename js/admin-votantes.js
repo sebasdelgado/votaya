@@ -1,34 +1,34 @@
-// admin-votantes.js — Gestión de votantes y carga de CSV
+// admin-votantes.js — Gestión de votantes
 
-// TODO: En backend:
-// - Carga CSV: leer archivo con PHP, parsear línea por línea e INSERT INTO usuarios
-// - Registro manual: INSERT INTO usuarios (numero_documento, nombre, apellido, ...)
-// - Listado: SELECT u.*, g.nombre as grupo FROM usuarios u JOIN grupos g ON u.grupo_id=g.id
+// El padrón se maneja con api/votantes.php (GET, POST y DELETE)
+// y los grupos del select vienen de api/grupos.php
 
 requiereAdmin();
+renderizarLayoutAdmin('admin-votantes.html');
 
 let votantes = [];
-let grupos   = [];
-let votantesFiltrados = [];
 
 async function inicializar() {
-  const [datosVotantes, datosGrupos] = await Promise.all([
-    obtenerJSON('votantes'),
-    obtenerJSON('grupos')
-  ]);
-
-  votantes = datosVotantes || [];
-  grupos   = datosGrupos   || [];
+  const grupos = await llamarAPI('grupos.php');
 
   // Llenar select de grupos
-  const selectGrupo = document.getElementById('v-grupo');
-  grupos.forEach(g => {
-    const op = document.createElement('option');
-    op.value       = g.id;
-    op.textContent = g.nombre;
-    selectGrupo.appendChild(op);
-  });
+  if (!grupos.error) {
+    const selectGrupo = document.getElementById('v-grupo');
+    grupos.forEach(g => {
+      const op = document.createElement('option');
+      op.value       = g.id;
+      op.textContent = g.nombre;
+      selectGrupo.appendChild(op);
+    });
+  }
 
+  await cargarVotantes();
+}
+
+async function cargarVotantes() {
+  const datos = await llamarAPI('votantes.php');
+  votantes    = datos.error ? [] : datos;
+  document.getElementById('buscador').value = '';
   renderizarVotantes(votantes);
 }
 
@@ -45,12 +45,11 @@ function renderizarVotantes(lista) {
   const plantilla = document.getElementById('tpl-fila-votante');
 
   lista.forEach(v => {
-    const grupo = grupos.find(g => g.id === v.grupo_id);
-    const nodo  = plantilla.content.cloneNode(true);
+    const nodo = plantilla.content.cloneNode(true);
 
     nodo.querySelector('.campo-documento').textContent = v.numero_documento;
     nodo.querySelector('.campo-nombre').textContent     = `${v.nombre} ${v.apellido}`;
-    nodo.querySelector('.campo-grupo').textContent      = grupo ? grupo.nombre : '—';
+    nodo.querySelector('.campo-grupo').textContent      = v.grupo || '—';
     nodo.querySelector('.campo-jornada').textContent    = v.jornada || '—';
     nodo.querySelector('.campo-genero').textContent     = v.genero || '—';
     nodo.querySelector('.btn-eliminar-votante').addEventListener('click', () => eliminarVotante(v.id));
@@ -61,15 +60,23 @@ function renderizarVotantes(lista) {
 
 function filtrarVotantes() {
   const busqueda = document.getElementById('buscador').value.toLowerCase();
-  const filtrados = votantes.filter(v =>
-    v.nombre.toLowerCase().includes(busqueda) ||
-    v.apellido.toLowerCase().includes(busqueda) ||
-    v.numero_documento.includes(busqueda)
-  );
+
+  const filtrados = [];
+  for (let i = 0; i < votantes.length; i++) {
+    const v = votantes[i];
+    if (
+      v.nombre.toLowerCase().includes(busqueda) ||
+      v.apellido.toLowerCase().includes(busqueda) ||
+      v.numero_documento.includes(busqueda)
+    ) {
+      filtrados.push(v);
+    }
+  }
+
   renderizarVotantes(filtrados);
 }
 
-function registrarVotante() {
+async function registrarVotante() {
   const documento  = document.getElementById('v-documento').value.trim();
   const nombre     = document.getElementById('v-nombre').value.trim();
   const apellido   = document.getElementById('v-apellido').value.trim();
@@ -85,14 +92,23 @@ function registrarVotante() {
     return;
   }
 
-  if (votantes.find(v => v.numero_documento === documento)) {
-    mostrarAlerta('alerta-votantes', 'Ya existe un votante con ese número de documento.', 'error');
+  if (!esSoloNumeros(documento)) {
+    mostrarAlerta('alerta-votantes', 'El número de documento solo debe contener números.', 'error');
     return;
   }
 
-  // TODO: En backend, enviar POST a 'api/votantes.php'
-  votantes.push({
-    id: Date.now(),
+  if (!esLongitudDocumentoValida(documento)) {
+    mostrarAlerta('alerta-votantes', 'El número de documento debe tener entre 6 y 15 dígitos.', 'error');
+    return;
+  }
+
+  if (!esFechaPasadaValida(nacimiento)) {
+    mostrarAlerta('alerta-votantes', 'La fecha de nacimiento no es válida.', 'error');
+    return;
+  }
+
+  // PHP revisa que el documento no esté repetido antes de guardarlo
+  const resultado = await llamarAPI('votantes.php', 'POST', {
     numero_documento: documento,
     nombre, apellido,
     fecha_nacimiento: nacimiento,
@@ -100,7 +116,12 @@ function registrarVotante() {
     grupo_id: grupoId
   });
 
-  renderizarVotantes(votantes);
+  if (resultado.error) {
+    mostrarAlerta('alerta-votantes', resultado.error, 'error');
+    return;
+  }
+
+  await cargarVotantes();
   mostrarAlerta('alerta-votantes', `Votante ${nombre} ${apellido} registrado correctamente.`, 'exito');
 
   ['v-documento','v-nombre','v-apellido','v-nacimiento'].forEach(id => {
@@ -111,64 +132,21 @@ function registrarVotante() {
   document.getElementById('v-grupo').value   = '';
 }
 
-function eliminarVotante(id) {
-  // TODO: En backend, DELETE FROM usuarios WHERE id=?
+async function eliminarVotante(id) {
   if (!confirm('¿Eliminar este votante?')) return;
-  votantes = votantes.filter(v => v.id !== id);
-  renderizarVotantes(votantes);
-}
 
-function cargarCSV() {
-  const archivo = document.getElementById('archivo-csv').files[0];
-
-  if (!archivo) {
-    mostrarAlerta('alerta-votantes', 'Selecciona un archivo CSV primero.', 'error');
+  const resultado = await llamarAPI(`votantes.php?id=${id}`, 'DELETE');
+  if (resultado.error) {
+    mostrarAlerta('alerta-votantes', resultado.error, 'error');
     return;
   }
 
-  // TODO: En backend, enviar el archivo a 'api/importar-csv.php' con FormData
-  // PHP usará fgetcsv() para leer cada línea e insertar en la tabla usuarios
-
-  const reader = new FileReader();
-  reader.onload = function (e) {
-    const lineas = e.target.result.trim().split('\n');
-    let importados = 0;
-    let errores    = 0;
-
-    // Saltar encabezado
-    lineas.slice(1).forEach((linea, idx) => {
-      const cols = linea.split(',').map(c => c.trim().replace(/"/g,''));
-      if (cols.length < 7) { errores++; return; }
-
-      const [documento, nombre, apellido, nacimiento, genero, jornada, grupoId] = cols;
-
-      if (!documento || !nombre || !apellido) { errores++; return; }
-      if (votantes.find(v => v.numero_documento === documento)) { errores++; return; }
-
-      votantes.push({
-        id: Date.now() + idx,
-        numero_documento: documento,
-        nombre, apellido,
-        fecha_nacimiento: nacimiento,
-        genero, jornada,
-        grupo_id: parseInt(grupoId)
-      });
-      importados++;
-    });
-
-    renderizarVotantes(votantes);
-    mostrarAlerta(
-      'alerta-votantes',
-      `CSV procesado: ${importados} votantes importados, ${errores} líneas con errores.`,
-      importados > 0 ? 'exito' : 'error'
-    );
-  };
-
-  reader.readAsText(archivo);
+  cargarVotantes();
 }
 
+permitirSoloNumeros(document.getElementById('v-documento'));
+
 document.getElementById('btn-cerrar-sesion').addEventListener('click', cerrarSesion);
-document.getElementById('btn-cargar-csv').addEventListener('click', cargarCSV);
 document.getElementById('btn-registrar-votante').addEventListener('click', registrarVotante);
 document.getElementById('buscador').addEventListener('input', filtrarVotantes);
 

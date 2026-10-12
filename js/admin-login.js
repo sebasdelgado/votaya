@@ -1,18 +1,7 @@
 // admin-login.js — Lógica de login del administrador
 
-// TODO: En backend, hacer fetch a 'api/login-admin.php'
-// PHP verificará: SELECT * FROM usuarios WHERE correo=? AND rol='admin'
-// y comparará la contraseña con password_verify($contrasena, $hash)
-
-// Credenciales de prueba para el frontend simulado
-const ADMIN_SIMULADO = {
-  id: 99,
-  nombre: 'Admin',
-  apellido: 'Sistema',
-  correo: 'admin@colegio.edu.co',
-  contrasena: 'admin123',
-  rol: 'admin'
-};
+// api/login-admin.php busca el correo en la tabla usuarios y compara la contraseña
+// con password_verify($contrasena, $hash)
 
 async function loginAdmin() {
   const correo     = document.getElementById('correo').value.trim();
@@ -25,13 +14,20 @@ async function loginAdmin() {
     return;
   }
 
-  // TODO: En backend reemplazar esta validación por una llamada a la API PHP
-  if (correo === ADMIN_SIMULADO.correo && contrasena === ADMIN_SIMULADO.contrasena) {
-    guardarSesion(ADMIN_SIMULADO);
-    window.location.href = 'admin-panel.html';
-  } else {
-    mostrarAlerta('alerta-admin', 'Correo o contraseña incorrectos.', 'error');
+  if (!esCorreoValido(correo)) {
+    mostrarAlerta('alerta-admin', 'Ingresa un correo electrónico válido.', 'error');
+    return;
   }
+
+  const admin = await llamarAPI('login-admin.php', 'POST', { correo, contrasena });
+
+  if (admin.error) {
+    mostrarAlerta('alerta-admin', admin.error, 'error');
+    return;
+  }
+
+  guardarSesion(admin);
+  window.location.href = 'admin-panel.html';
 }
 
 document.getElementById('btn-login-admin').addEventListener('click', loginAdmin);

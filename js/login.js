@@ -1,8 +1,7 @@
 // login.js — Lógica de ingreso del votante por número de documento
 
-// TODO: En backend, esta función hará fetch a 'api/login-votante.php'
-// que ejecutará: SELECT * FROM usuarios WHERE numero_documento = ? AND rol = 'votante'
-// Si existe, PHP iniciará la sesión con session_start() y $_SESSION['usuario']
+// api/login-votante.php busca el documento en la tabla usuarios y, si existe,
+// guarda al votante en $_SESSION['usuario']
 
 async function ingresar() {
   const documento = document.getElementById('numero-documento').value.trim();
@@ -14,30 +13,29 @@ async function ingresar() {
     return;
   }
 
-  if (documento.length < 6) {
-    mostrarAlerta('alerta-login', 'El número de documento debe tener al menos 6 caracteres.', 'error');
+  if (!esSoloNumeros(documento)) {
+    mostrarAlerta('alerta-login', 'El número de documento solo debe contener números.', 'error');
     return;
   }
 
-  // TODO: En backend reemplazar por: fetch('api/login-votante.php', { method:'POST', body: formData })
-  const votantes = await obtenerJSON('votantes');
-
-  if (!votantes) {
-    mostrarAlerta('alerta-login', 'Error al conectar con el servidor. Intenta de nuevo.', 'error');
+  if (!esLongitudDocumentoValida(documento)) {
+    mostrarAlerta('alerta-login', 'El número de documento debe tener entre 6 y 15 dígitos.', 'error');
     return;
   }
 
-  const votante = votantes.find(v => v.numero_documento === documento);
+  const votante = await llamarAPI('login-votante.php', 'POST', { numero_documento: documento });
 
-  if (!votante) {
-    mostrarAlerta('alerta-login', 'Documento no encontrado. Verifica el número e intenta de nuevo.', 'error');
+  if (votante.error) {
+    mostrarAlerta('alerta-login', votante.error, 'error');
     return;
   }
 
-  // Guardar sesión y redirigir
-  guardarSesion({ ...votante, rol: 'votante' });
+  // Guardar los datos del votante y redirigir
+  guardarSesion(votante);
   window.location.href = 'pages/encuestas.html';
 }
+
+permitirSoloNumeros(document.getElementById('numero-documento'));
 
 document.getElementById('btn-ingresar').addEventListener('click', ingresar);
 

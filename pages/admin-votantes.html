@@ -4,92 +4,55 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VotaYa — Votantes</title>
-  <link rel="stylesheet" href="../css/base.css">
-  <link rel="stylesheet" href="../css/componentes.css">
-  <link rel="stylesheet" href="../css/layout-admin.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../js/tailwind-config.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/componentes.css">
 </head>
-<body class="layout-admin">
+<body class="pagina flex flex-col">
 
-  <nav class="topbar-admin">
-    <div class="topbar-admin-izq">
-      <span class="topbar-logo">Vota<span>Ya</span></span>
-      <span class="topbar-admin-badge">Administrador</span>
-    </div>
-  </nav>
+  <div id="topbar"></div>
+  <div id="sidebar"></div>
 
-  <aside class="sidebar">
-    <p class="sidebar-seccion">Principal</p>
-    <a href="admin-panel.html" class="sidebar-link">
-      <i class="ti ti-layout-dashboard"></i> Panel
-    </a>
-    <p class="sidebar-seccion">Gestión</p>
-    <a href="admin-encuesta-nueva.html" class="sidebar-link">
-      <i class="ti ti-plus"></i> Nueva encuesta
-    </a>
-    <a href="admin-candidatos.html" class="sidebar-link">
-      <i class="ti ti-user-star"></i> Candidatos
-    </a>
-    <a href="admin-votantes.html" class="sidebar-link activo">
-      <i class="ti ti-id-badge"></i> Votantes
-    </a>
-    <div class="sidebar-footer">
-      <button id="btn-cerrar-sesion" class="btn btn-xs btn-peligro btn-bloque">
-        <i class="ti ti-logout"></i> Cerrar sesión
-      </button>
-    </div>
-  </aside>
+  <main class="main-admin ml-0 md:ml-sidebar-w">
+    <div class="py-5 px-3.5 md:py-7 md:px-10 max-w-[1400px]">
 
-  <main class="admin-body">
-    <div class="admin-contenido">
-
-      <div class="pagina-header">
-        <h2>Gestión de votantes</h2>
-        <p>Registra los estudiantes que podrán participar en las votaciones</p>
+      <div class="mb-6">
+        <h2 class="font-titulo font-bold text-texto text-xl mb-1">Gestión de votantes</h2>
+        <p class="text-sm text-texto-muted">Registra los estudiantes que podrán participar en las votaciones</p>
       </div>
 
-      <div id="alerta-votantes" class="alerta alerta-oculta"></div>
+      <div id="alerta-votantes" class="hidden"></div>
 
-      <div class="grid-2 mb-24">
-
-        <div class="card">
-          <h3 class="mb-16">Cargar desde CSV</h3>
-          <p class="texto-muted mb-16">El archivo debe tener las columnas:<br>
-            <code class="codigo-inline">numero_documento, nombre, apellido, fecha_nacimiento, genero, jornada, grupo_id</code>
-          </p>
-          <div class="form-grupo">
-            <label for="archivo-csv">Archivo CSV</label>
-            <input type="file" id="archivo-csv" accept=".csv" class="form-input">
-          </div>
-          <button id="btn-cargar-csv" class="btn btn-primario btn-bloque">
-            <i class="ti ti-upload"></i> Cargar archivo
-          </button>
-        </div>
+      <div class="mb-6 max-w-[600px]">
 
         <div class="card">
-          <h3 class="mb-16">Registrar manualmente</h3>
-          <div class="form-grupo">
-            <label for="v-documento">Número de documento</label>
-            <input type="text" id="v-documento" class="form-input" placeholder="Ej: 1005234567">
+          <h3 class="font-titulo font-bold text-texto text-lg mb-4">Registrar votante</h3>
+          <div class="mb-4">
+            <label for="v-documento" class="label">Número de documento</label>
+            <input type="text" id="v-documento" placeholder="Ej: 1005234567" class="input">
           </div>
-          <div class="form-fila">
-            <div class="form-grupo">
-              <label for="v-nombre">Nombre</label>
-              <input type="text" id="v-nombre" class="form-input" placeholder="Nombre">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="mb-4">
+              <label for="v-nombre" class="label">Nombre</label>
+              <input type="text" id="v-nombre" placeholder="Nombre" class="input">
             </div>
-            <div class="form-grupo">
-              <label for="v-apellido">Apellido</label>
-              <input type="text" id="v-apellido" class="form-input" placeholder="Apellido">
+            <div class="mb-4">
+              <label for="v-apellido" class="label">Apellido</label>
+              <input type="text" id="v-apellido" placeholder="Apellido" class="input">
             </div>
           </div>
-          <div class="form-fila">
-            <div class="form-grupo">
-              <label for="v-nacimiento">Fecha de nacimiento</label>
-              <input type="date" id="v-nacimiento" class="form-input">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="mb-4">
+              <label for="v-nacimiento" class="label">Fecha de nacimiento</label>
+              <input type="date" id="v-nacimiento" class="input">
             </div>
-            <div class="form-grupo">
-              <label for="v-genero">Género</label>
-              <select id="v-genero" class="form-select">
+            <div class="mb-4">
+              <label for="v-genero" class="label">Género</label>
+              <select id="v-genero" class="input">
                 <option value="">Seleccionar</option>
                 <option value="masculino">Masculino</option>
                 <option value="femenino">Femenino</option>
@@ -97,23 +60,23 @@
               </select>
             </div>
           </div>
-          <div class="form-fila">
-            <div class="form-grupo">
-              <label for="v-jornada">Jornada</label>
-              <select id="v-jornada" class="form-select">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="mb-4">
+              <label for="v-jornada" class="label">Jornada</label>
+              <select id="v-jornada" class="input">
                 <option value="">Seleccionar</option>
                 <option value="mañana">Mañana</option>
                 <option value="tarde">Tarde</option>
               </select>
             </div>
-            <div class="form-grupo">
-              <label for="v-grupo">Grupo</label>
-              <select id="v-grupo" class="form-select">
+            <div class="mb-4">
+              <label for="v-grupo" class="label">Grupo</label>
+              <select id="v-grupo" class="input">
                 <option value="">Seleccionar</option>
               </select>
             </div>
           </div>
-          <button id="btn-registrar-votante" class="btn btn-primario btn-bloque">
+          <button id="btn-registrar-votante" class="btn btn-primario w-full justify-center">
             <i class="ti ti-user-plus"></i> Registrar votante
           </button>
         </div>
@@ -121,21 +84,20 @@
       </div>
 
       <div class="card">
-        <div class="flex-entre mb-16">
-          <h3>Votantes registrados (<span id="total-votantes">0</span>)</h3>
-          <input type="text" id="buscador" class="form-input input-buscador"
-            placeholder="Buscar por nombre o documento...">
+        <div class="flex items-center justify-between gap-3 mb-4">
+          <h3 class="font-titulo font-bold text-texto text-lg">Votantes registrados (<span id="total-votantes">0</span>)</h3>
+          <input type="text" id="buscador" placeholder="Buscar por nombre o documento..." class="input w-[240px]">
         </div>
-        <div class="tabla-wrap">
-          <table>
+        <div class="overflow-x-auto">
+          <table class="w-full border-collapse text-sm">
             <thead>
               <tr>
-                <th>Documento</th>
-                <th>Nombre</th>
-                <th>Grupo</th>
-                <th>Jornada</th>
-                <th>Género</th>
-                <th></th>
+                <th class="tabla-th">Documento</th>
+                <th class="tabla-th">Nombre</th>
+                <th class="tabla-th">Grupo</th>
+                <th class="tabla-th">Jornada</th>
+                <th class="tabla-th">Género</th>
+                <th class="tabla-th"></th>
               </tr>
             </thead>
             <tbody id="tabla-votantes">
@@ -149,14 +111,14 @@
   </main>
 
   <template id="tpl-fila-votante">
-    <tr>
-      <td class="campo-documento"></td>
-      <td class="td-nombre campo-nombre"></td>
-      <td class="campo-grupo"></td>
-      <td class="campo-jornada"></td>
-      <td class="campo-genero"></td>
-      <td>
-        <button class="btn btn-xs btn-peligro btn-eliminar-votante">
+    <tr class="hover:bg-fondo">
+      <td class="campo-documento tabla-td text-texto-suave"></td>
+      <td class="campo-nombre font-medium text-texto tabla-td"></td>
+      <td class="campo-grupo tabla-td text-texto-suave"></td>
+      <td class="campo-jornada tabla-td text-texto-suave"></td>
+      <td class="campo-genero tabla-td text-texto-suave"></td>
+      <td class="tabla-td">
+        <button class="btn-eliminar-votante btn btn-chico btn-peligro">
           <i class="ti ti-trash"></i>
         </button>
       </td>

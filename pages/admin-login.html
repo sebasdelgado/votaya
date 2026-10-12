@@ -4,40 +4,45 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VotaYa — Acceso administrador</title>
-  <link rel="stylesheet" href="../css/base.css">
-  <link rel="stylesheet" href="../css/componentes.css">
-  <link rel="stylesheet" href="../css/layout-login.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../js/tailwind-config.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/componentes.css">
 </head>
-<body>
-  <div class="layout-login">
-    <div class="login-card">
-      <div class="login-logo">
-        <div class="login-logo-icono"><i class="ti ti-shield-check"></i></div>
-        <span class="login-logo-texto">Vota<span>Ya</span></span>
+<body class="pagina">
+  <div class="min-h-screen flex items-center justify-center p-5">
+    <div class="card px-9 py-10 rounded-xl w-full max-w-[400px]">
+      <div class="flex items-center gap-3 mb-7">
+        <div class="icon-box w-11 h-11 rounded-[12px] text-xl">
+          <i class="ti ti-shield-check"></i>
+        </div>
+        <span class="font-titulo text-xl font-bold text-texto">Vota<span class="text-acento">Ya</span></span>
       </div>
-      <h2>Acceso administrador</h2>
-      <p class="login-subtitulo">Ingresa tus credenciales para gestionar el sistema</p>
-      <div id="alerta-admin" class="alerta alerta-oculta"></div>
-      <div class="form-grupo">
-        <label for="correo">Correo electrónico</label>
-        <div class="form-input-icono">
-          <i class="ti ti-mail icono"></i>
-          <input type="email" id="correo" class="form-input" placeholder="admin@colegio.edu.co">
+      <h2 class="font-titulo font-bold text-texto text-xl">Acceso administrador</h2>
+      <p class="text-sm text-texto-muted mb-6">Ingresa tus credenciales para gestionar el sistema</p>
+      <div id="alerta-admin" class="hidden"></div>
+      <div class="mb-4">
+        <label for="correo" class="label">Correo electrónico</label>
+        <div class="input-icono">
+          <i class="ti ti-mail"></i>
+          <input type="email" id="correo" placeholder="admin@colegio.edu.co" class="input">
         </div>
       </div>
-      <div class="form-grupo">
-        <label for="contrasena">Contraseña</label>
-        <div class="form-input-icono">
-          <i class="ti ti-lock icono"></i>
-          <input type="password" id="contrasena" class="form-input" placeholder="••••••••">
+      <div class="mb-4">
+        <label for="contrasena" class="label">Contraseña</label>
+        <div class="input-icono">
+          <i class="ti ti-lock"></i>
+          <input type="password" id="contrasena" placeholder="••••••••" class="input">
         </div>
       </div>
-      <button id="btn-login-admin" class="btn btn-primario btn-bloque mt-8">
+      <button id="btn-login-admin" class="btn btn-primario w-full justify-center mt-2">
         <i class="ti ti-login"></i> Ingresar
       </button>
       <hr class="separador">
-      <p class="texto-centro texto-muted">
+      <p class="text-center">
         <a href="../index.html" class="link-volver">
           <i class="ti ti-arrow-left"></i> Volver al ingreso de votantes
         </a>

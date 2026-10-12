@@ -1,16 +1,16 @@
 // admin-encuesta-nueva.js — Crear nueva encuesta
 
-// TODO: En backend, guardar con:
-// INSERT INTO encuestas (titulo, descripcion, tipo, estado, fecha_inicio, fecha_fin)
-// Luego INSERT INTO opciones (encuesta_id, candidato_id, texto_opcion) por cada opción
+// La encuesta se envía a api/encuestas.php (POST), que la guarda junto con sus opciones
 
 requiereAdmin();
+renderizarLayoutAdmin('admin-encuesta-nueva.html');
 
 let candidatos    = [];
 let contadorOpciones = 0;
 
 async function inicializar() {
-  candidatos = await obtenerJSON('candidatos') || [];
+  const datos = await llamarAPI('candidatos.php');
+  candidatos  = datos.error ? [] : datos;
   renderizarCandidatos();
   agregarOpcion();
   agregarOpcion();
@@ -24,7 +24,7 @@ function renderizarCandidatos() {
       <div class="alerta alerta-info">
         <i class="ti ti-info-circle"></i>
         No hay candidatos registrados.
-        <a href="admin-candidatos.html">Registrar candidatos</a>
+        <a href="admin-candidatos.html" class="hover:underline">Registrar candidatos</a>
       </div>`;
     return;
   }
@@ -35,7 +35,7 @@ function renderizarCandidatos() {
   candidatos.forEach(c => {
     const nodo = plantilla.content.cloneNode(true);
     nodo.querySelector('.check-candidato').value       = c.id;
-    nodo.querySelector('.campo-iniciales').textContent = iniciales(c.nombre, c.apellido);
+    renderizarAvatar(nodo.querySelector('.campo-iniciales'), c.nombre, c.apellido, c.foto);
     nodo.querySelector('.campo-nombre').textContent     = `${c.nombre} ${c.apellido}`;
     nodo.querySelector('.campo-lista').textContent      = `Lista ${c.numero_lista}`;
     contenedor.appendChild(nodo);
@@ -54,7 +54,6 @@ function agregarOpcion() {
 
   wrap.id = `opcion-wrap-${contadorOpciones}`;
   input.placeholder = `Opción ${contadorOpciones}`;
-  input.style.flex  = '1';
   btn.addEventListener('click', () => quitarOpcion(wrap.id));
 
   contenedor.appendChild(nodo);
@@ -71,7 +70,7 @@ function cambiarTipo() {
   document.getElementById('seccion-texto').style.display      = tipo === 'texto'      ? 'block' : 'none';
 }
 
-function crearEncuesta() {
+async function crearEncuesta() {
   const titulo   = document.getElementById('enc-titulo').value.trim();
   const desc     = document.getElementById('enc-desc').value.trim();
   const tipo     = document.getElementById('enc-tipo').value;
@@ -84,6 +83,11 @@ function crearEncuesta() {
     return;
   }
 
+  if (!esFechaFutura(fechaFin)) {
+    mostrarAlerta('alerta-encuesta', 'La fecha de cierre debe ser posterior a hoy.', 'error');
+    return;
+  }
+
   let opciones = [];
 
   if (tipo === 'candidatos') {
@@ -92,13 +96,15 @@ function crearEncuesta() {
       mostrarAlerta('alerta-encuesta', 'Selecciona al menos 2 candidatos.', 'error');
       return;
     }
-    opciones = Array.from(checks).map(ch => ({ candidato_id: parseInt(ch.value), texto_opcion: null }));
+    for (let i = 0; i < checks.length; i++) {
+      opciones.push({ candidato_id: parseInt(checks[i].value), texto_opcion: null });
+    }
   } else {
     const inputs = document.querySelectorAll('.opcion-texto');
-    opciones = Array.from(inputs)
-      .map(i => i.value.trim())
-      .filter(Boolean)
-      .map(texto => ({ candidato_id: null, texto_opcion: texto }));
+    for (let i = 0; i < inputs.length; i++) {
+      const texto = inputs[i].value.trim();
+      if (texto) opciones.push({ candidato_id: null, texto_opcion: texto });
+    }
 
     if (opciones.length < 2) {
       mostrarAlerta('alerta-encuesta', 'Agrega al menos 2 opciones de texto.', 'error');
@@ -106,16 +112,19 @@ function crearEncuesta() {
     }
   }
 
-  // TODO: En backend, enviar POST a 'api/encuestas.php' con todos los datos
-  // PHP insertará la encuesta y sus opciones en MySQL
-  const nuevaEncuesta = {
-    id: Date.now(),
-    titulo, descripcion: desc, tipo,
-    estado: 'activa',
-    fecha_inicio: new Date().toISOString().split('T')[0],
+  // El estado ('activa') y la fecha de inicio (hoy) los pone PHP
+  const resultado = await llamarAPI('encuestas.php', 'POST', {
+    titulo,
+    descripcion: desc,
+    tipo,
     fecha_fin: fechaFin,
-    opciones: opciones.map((op, i) => ({ id: Date.now() + i, ...op }))
-  };
+    opciones
+  });
+
+  if (resultado.error) {
+    mostrarAlerta('alerta-encuesta', resultado.error, 'error');
+    return;
+  }
 
   mostrarAlerta('alerta-encuesta', `Encuesta "${titulo}" creada correctamente.`, 'exito');
 

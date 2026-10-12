@@ -4,38 +4,49 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VotaYa — Ingreso</title>
-    <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/componentes.css" />
-    <link rel="stylesheet" href="css/layout-login.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/tailwind-config.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap"
+    />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
     />
+    <link rel="stylesheet" href="css/componentes.css" />
   </head>
 
-  <body>
-    <div class="layout-login layout-login-columna">
-      <div class="doc-icono"><i class="ti ti-id-badge"></i></div>
-      <h1 class="doc-titulo">VotaYa</h1>
-      <p class="doc-subtitulo">
+  <body class="pagina">
+    <div class="min-h-screen flex flex-col items-center justify-center p-5">
+      <div class="icon-box w-[72px] h-[72px] rounded-[20px] text-4xl mb-5">
+        <i class="ti ti-id-badge"></i>
+      </div>
+      <h1 class="font-titulo font-bold text-texto text-2xl mb-1.5 text-center">VotaYa</h1>
+      <p class="text-sm text-texto-muted mb-7 text-center">
         Ingresa tu número de documento para acceder a las votaciones
       </p>
-      <div class="doc-form">
-        <div id="alerta-login" class="alerta alerta-oculta"></div>
+      <div class="w-full max-w-[360px]">
+        <div id="alerta-login" class="hidden"></div>
         <input
           type="text"
           id="numero-documento"
-          class="doc-input"
+          class="input text-center text-xl font-titulo tracking-[0.08em] mb-3"
           placeholder="Ej: 1005234567"
           maxlength="15"
           autocomplete="off"
-          value="1005234570"
         />
-        <button id="btn-ingresar" class="btn btn-primario btn-bloque">
+        <button
+          id="btn-ingresar"
+          class="btn btn-primario w-full justify-center"
+        >
           <i class="ti ti-arrow-right"></i> Ingresar a votar
         </button>
-        <p class="texto-centro mt-16 doc-nota">
-          ¿Eres administrador? <a href="pages/admin-login.html">Acceso admin</a>
+        <p class="text-center mt-4 text-xs text-texto-muted">
+          ¿Eres administrador?
+          <a href="pages/admin-login.html" class="text-acento hover:underline">Acceso admin</a>
         </p>
       </div>
     </div>

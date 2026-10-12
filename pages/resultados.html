@@ -4,41 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VotaYa — Resultados</title>
-  <link rel="stylesheet" href="../css/base.css">
-  <link rel="stylesheet" href="../css/componentes.css">
-  <link rel="stylesheet" href="../css/layout-votante.css">
-  <link rel="stylesheet" href="../css/resultados.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../js/tailwind-config.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/componentes.css">
 </head>
-<body class="layout-votante">
+<body class="pagina flex flex-col">
 
-  <nav class="topbar-votante">
-    <span class="topbar-logo">Vota<span>Ya</span></span>
-    <div class="topbar-derecha">
-      <div class="avatar" id="topbar-avatar">--</div>
-      <span class="topbar-nombre" id="topbar-usuario"></span>
-      <button id="btn-cerrar-sesion" class="btn-salir">
-        <i class="ti ti-logout"></i> Salir
-      </button>
-    </div>
-  </nav>
+  <div id="topbar"></div>
 
-  <div class="votante-body">
-    <div class="votante-contenido">
+  <div class="flex-1 flex justify-center py-8 px-4">
+    <div class="w-full max-w-[960px]">
 
-      <a href="encuestas.html" class="link-volver">
-        <i class="ti ti-arrow-left"></i> Volver a encuestas
+      <a id="link-volver" href="encuestas.html" class="link-volver mb-4">
+        <i class="ti ti-arrow-left"></i> <span id="texto-volver">Volver a encuestas</span>
       </a>
 
-      <div class="pagina-header">
-        <h2 id="enc-titulo">Cargando...</h2>
-        <p id="enc-desc"></p>
+      <div class="mb-6">
+        <h2 id="enc-titulo" class="font-titulo font-bold text-texto text-xl mb-1">Cargando...</h2>
+        <p id="enc-desc" class="text-sm text-texto-muted"></p>
       </div>
 
-      <div id="stats-resultados" class="stats-grid"></div>
+      <div id="stats-resultados" class="stats-grid mb-6"></div>
 
       <div class="card">
-        <h3 class="mb-16">Resultados</h3>
+        <h3 class="font-titulo font-bold text-texto text-lg mb-4">Resultados</h3>
         <div id="grafica-resultados">
           <div class="cargando"><i class="ti ti-loader"></i> Cargando resultados...</div>
         </div>

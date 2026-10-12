@@ -1,12 +1,12 @@
 [
   {
     "id": 1,
-    "titulo": "Elección de personero estudiantil 2025",
-    "descripcion": "Elige al representante estudiantil para el año lectivo 2025.",
+    "titulo": "Elección de personero estudiantil 2026",
+    "descripcion": "Elige al representante estudiantil para el año lectivo 2026.",
     "tipo": "candidatos",
     "estado": "activa",
-    "fecha_inicio": "2025-05-01",
-    "fecha_fin": "2025-05-30",
+    "fecha_inicio": "2026-07-20",
+    "fecha_fin": "2026-08-20",
     "opciones": [
       { "id": 1, "candidato_id": 1, "texto_opcion": null },
       { "id": 2, "candidato_id": 2, "texto_opcion": null },
@@ -19,8 +19,8 @@
     "descripcion": "Cuéntanos qué actividad te gustaría que organizara el colegio.",
     "tipo": "texto",
     "estado": "activa",
-    "fecha_inicio": "2025-05-15",
-    "fecha_fin": "2025-06-02",
+    "fecha_inicio": "2026-07-25",
+    "fecha_fin": "2026-08-15",
     "opciones": [
       { "id": 4, "candidato_id": null, "texto_opcion": "Paseo ecológico" },
       { "id": 5, "candidato_id": null, "texto_opcion": "Torneo deportivo" },

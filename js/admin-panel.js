@@ -1,21 +1,18 @@
 // admin-panel.js — Panel principal del administrador
 
-// TODO: En backend, las estadísticas se obtendrán con consultas SQL como:
-// SELECT COUNT(*) FROM encuestas WHERE estado='activa'
-// SELECT COUNT(*) FROM votos
-// SELECT COUNT(*) FROM usuarios WHERE rol='votante'
+// Las estadísticas vienen de api/estadisticas.php (consultas COUNT en MySQL)
+// y la tabla de api/encuestas.php, que incluye el total de votos de cada encuesta
 
 requiereAdmin();
+renderizarLayoutAdmin('admin-panel.html');
 
 async function cargarPanel() {
-  const encuestas = await obtenerJSON('encuestas');
-  const votantes  = await obtenerJSON('votantes');
-  const votos     = obtenerVotosLocales();
+  const [stats, encuestas] = await Promise.all([
+    llamarAPI('estadisticas.php'),
+    llamarAPI('encuestas.php')
+  ]);
 
-  if (!encuestas) return;
-
-  const activas = encuestas.filter(e => e.estado === 'activa').length;
-  const cerradas = encuestas.filter(e => e.estado === 'cerrada').length;
+  if (stats.error || encuestas.error) return;
 
   // Stats
   const contenedorStats = document.getElementById('stats-panel');
@@ -23,10 +20,10 @@ async function cargarPanel() {
   contenedorStats.innerHTML = '';
 
   [
-    ['Encuestas activas', activas],
-    ['Encuestas cerradas', cerradas],
-    ['Votos registrados', votos.length],
-    ['Votantes', votantes ? votantes.length : 0]
+    ['Encuestas activas', stats.encuestas_activas],
+    ['Encuestas cerradas', stats.encuestas_cerradas],
+    ['Votos registrados', stats.votos],
+    ['Votantes', stats.votantes]
   ].forEach(([label, valor]) => {
     const nodo = plantillaStat.content.cloneNode(true);
     nodo.querySelector('.campo-label').textContent = label;
@@ -46,20 +43,19 @@ async function cargarPanel() {
   const plantillaFila = document.getElementById('tpl-fila-encuesta');
 
   encuestas.forEach(enc => {
-    const votosEnc = obtenerVotosLocales().filter(v => v.encuesta_id === enc.id).length;
-    const nodo     = plantillaFila.content.cloneNode(true);
+    const nodo = plantillaFila.content.cloneNode(true);
 
     nodo.querySelector('.campo-titulo').textContent = enc.titulo;
     nodo.querySelector('.campo-tipo').textContent    = enc.tipo === 'candidatos' ? 'Candidatos' : 'Texto';
-    nodo.querySelector('.campo-estado').innerHTML    = enc.estado === 'activa'
-      ? '<span class="badge badge-activa">● Activa</span>'
-      : '<span class="badge badge-cerrada">Cerrada</span>';
-    nodo.querySelector('.campo-votos').textContent  = votosEnc;
+    nodo.querySelector('.campo-estado').innerHTML    = !encuestaEstaCerrada(enc)
+      ? `<span class="badge badge-activa">● Activa</span>`
+      : `<span class="badge badge-cerrada">Cerrada</span>`;
+    nodo.querySelector('.campo-votos').textContent  = enc.total_votos;
     nodo.querySelector('.campo-cierre').textContent = formatearFecha(enc.fecha_fin);
     nodo.querySelector('.enlace-resultados').href   = `resultados.html?id=${enc.id}`;
 
     const btnCerrar = nodo.querySelector('.btn-cerrar-encuesta');
-    if (enc.estado === 'activa') {
+    if (!encuestaEstaCerrada(enc)) {
       btnCerrar.addEventListener('click', () => cerrarEncuesta(enc.id));
     } else {
       btnCerrar.remove();
@@ -71,19 +67,25 @@ async function cargarPanel() {
   });
 }
 
-function cerrarEncuesta(id) {
-  // TODO: En backend, hacer fetch a 'api/encuestas.php' con método PUT
-  // PHP ejecutará: UPDATE encuestas SET estado='cerrada' WHERE id=?
+async function cerrarEncuesta(id) {
   if (!confirm('¿Cerrar esta encuesta? Los votantes ya no podrán votar.')) return;
-  alert('Encuesta cerrada. (Simulado — en backend se actualizará en MySQL)');
+
+  const resultado = await llamarAPI(`encuestas.php?id=${id}`, 'PUT');
+  if (resultado.error) {
+    alert(resultado.error);
+    return;
+  }
   cargarPanel();
 }
 
-function eliminarEncuesta(id) {
-  // TODO: En backend, hacer fetch a 'api/encuestas.php' con método DELETE
-  // PHP ejecutará: DELETE FROM encuestas WHERE id=? y DELETE FROM opciones WHERE encuesta_id=?
-  if (!confirm('¿Eliminar esta encuesta? Esta acción no se puede deshacer.')) return;
-  alert('Encuesta eliminada. (Simulado — en backend se eliminará de MySQL)');
+async function eliminarEncuesta(id) {
+  if (!confirm('¿Eliminar esta encuesta? Se borrarán también todos sus votos. Esta acción no se puede deshacer.')) return;
+
+  const resultado = await llamarAPI(`encuestas.php?id=${id}`, 'DELETE');
+  if (resultado.error) {
+    alert(resultado.error);
+    return;
+  }
   cargarPanel();
 }
 

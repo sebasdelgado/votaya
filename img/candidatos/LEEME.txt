@@ -1,0 +1,4 @@
+Carpeta de fotos de los candidatos.
+
+1. Copia aquí la foto del candidato (jpg, jpeg, png, gif o webp).
+2. En "Registrar candidato" escribe solo el nombre del archivo, por ejemplo: juan-perez.jpg

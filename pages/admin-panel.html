@@ -4,71 +4,48 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VotaYa — Panel admin</title>
-  <link rel="stylesheet" href="../css/base.css">
-  <link rel="stylesheet" href="../css/componentes.css">
-  <link rel="stylesheet" href="../css/layout-admin.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../js/tailwind-config.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/componentes.css">
 </head>
-<body class="layout-admin">
+<body class="pagina flex flex-col">
 
-  <nav class="topbar-admin">
-    <div class="topbar-admin-izq">
-      <span class="topbar-logo">Vota<span>Ya</span></span>
-      <span class="topbar-admin-badge">Administrador</span>
-    </div>
-  </nav>
+  <div id="topbar"></div>
+  <div id="sidebar"></div>
 
-  <aside class="sidebar">
-    <p class="sidebar-seccion">Principal</p>
-    <a href="admin-panel.html" class="sidebar-link activo">
-      <i class="ti ti-layout-dashboard"></i> Panel
-    </a>
-    <p class="sidebar-seccion">Gestión</p>
-    <a href="admin-encuesta-nueva.html" class="sidebar-link">
-      <i class="ti ti-plus"></i> Nueva encuesta
-    </a>
-    <a href="admin-candidatos.html" class="sidebar-link">
-      <i class="ti ti-user-star"></i> Candidatos
-    </a>
-    <a href="admin-votantes.html" class="sidebar-link">
-      <i class="ti ti-id-badge"></i> Votantes
-    </a>
-    <div class="sidebar-footer">
-      <button id="btn-cerrar-sesion" class="btn btn-xs btn-peligro btn-bloque">
-        <i class="ti ti-logout"></i> Cerrar sesión
-      </button>
-    </div>
-  </aside>
+  <main class="main-admin ml-0 md:ml-sidebar-w">
+    <div class="py-5 px-3.5 md:py-7 md:px-10 max-w-[1400px]">
 
-  <main class="admin-body">
-    <div class="admin-contenido">
-
-      <div class="pagina-header-fila">
+      <div class="flex flex-col md:flex-row items-start md:justify-between gap-4 mb-6">
         <div>
-          <h2>Panel de administración</h2>
-          <p>Resumen general del sistema de votaciones</p>
+          <h2 class="font-titulo font-bold text-texto text-xl mb-1">Panel de administración</h2>
+          <p class="text-sm text-texto-muted">Resumen general del sistema de votaciones</p>
         </div>
-        <a href="admin-encuesta-nueva.html" class="btn btn-primario btn-sm">
+        <a href="admin-encuesta-nueva.html" class="btn btn-primario">
           <i class="ti ti-plus"></i> Nueva encuesta
         </a>
       </div>
 
-      <div id="stats-panel" class="stats-grid"></div>
+      <div id="stats-panel" class="stats-grid mb-6"></div>
 
       <div class="card">
-        <div class="flex-entre mb-16">
-          <h3>Todas las encuestas</h3>
+        <div class="flex items-center justify-between gap-3 mb-4">
+          <h3 class="font-titulo font-bold text-texto text-lg">Todas las encuestas</h3>
         </div>
-        <div class="tabla-wrap">
-          <table>
+        <div class="overflow-x-auto">
+          <table class="w-full border-collapse text-sm">
             <thead>
               <tr>
-                <th>Encuesta</th>
-                <th>Tipo</th>
-                <th>Estado</th>
-                <th>Votos</th>
-                <th>Cierre</th>
-                <th>Acciones</th>
+                <th class="tabla-th">Encuesta</th>
+                <th class="tabla-th">Tipo</th>
+                <th class="tabla-th">Estado</th>
+                <th class="tabla-th">Votos</th>
+                <th class="tabla-th">Cierre</th>
+                <th class="tabla-th">Acciones</th>
               </tr>
             </thead>
             <tbody id="tabla-encuestas">
@@ -83,27 +60,29 @@
 
   <template id="tpl-stat-card">
     <div class="stat-card">
-      <div class="stat-label campo-label"></div>
-      <div class="stat-valor campo-valor"></div>
+      <div class="campo-label stat-label"></div>
+      <div class="campo-valor stat-valor"></div>
     </div>
   </template>
 
   <template id="tpl-fila-encuesta">
-    <tr>
-      <td class="td-nombre campo-titulo"></td>
-      <td><span class="badge badge-tipo campo-tipo"></span></td>
-      <td class="campo-estado"></td>
-      <td class="campo-votos"></td>
-      <td class="campo-cierre"></td>
-      <td>
-        <div class="acciones">
-          <a class="btn btn-xs btn-secundario enlace-resultados">
+    <tr class="hover:bg-fondo">
+      <td class="campo-titulo font-medium text-texto tabla-td"></td>
+      <td class="tabla-td">
+        <span class="campo-tipo badge badge-tipo"></span>
+      </td>
+      <td class="campo-estado tabla-td"></td>
+      <td class="campo-votos tabla-td text-texto-suave"></td>
+      <td class="campo-cierre tabla-td text-texto-suave"></td>
+      <td class="tabla-td">
+        <div class="flex gap-1.5 flex-wrap">
+          <a class="enlace-resultados btn btn-chico btn-suave">
             <i class="ti ti-chart-bar"></i> Resultados
           </a>
-          <button class="btn btn-xs btn-alerta btn-cerrar-encuesta">
+          <button class="btn-cerrar-encuesta btn btn-chico btn-alerta">
             <i class="ti ti-lock"></i> Cerrar
           </button>
-          <button class="btn btn-xs btn-peligro btn-eliminar-encuesta">
+          <button class="btn-eliminar-encuesta btn btn-chico btn-peligro">
             <i class="ti ti-trash"></i>
           </button>
         </div>

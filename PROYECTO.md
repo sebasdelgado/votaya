@@ -84,7 +84,6 @@ Luego navegar a `http://localhost:8080`.
 - **No es un usuario del sistema** — no inicia sesión
 - Es un registro creado por el admin
 - Campos: `nombre`, `apellido`, `foto`, `propuesta`, `numero_lista`
-- Tiene **etiquetas de propuesta** asignadas por el admin (pendiente)
 
 ---
 
@@ -155,7 +154,7 @@ Todas las páginas cargan `app.js` primero. Expone:
 
 ---
 
-## Base de datos — 7 tablas
+## Base de datos — 6 tablas
 
 ### `grupos`
 | Campo | Tipo | Descripción |
@@ -184,25 +183,9 @@ Todas las páginas cargan `app.js` primero. Expone:
 | id | INT PK | |
 | nombre | VARCHAR | |
 | apellido | VARCHAR | |
-| foto | VARCHAR | URL opcional |
+| foto | VARCHAR | Nombre del archivo en `img/candidatos/` (opcional) |
 | propuesta | TEXT | |
 | numero_lista | VARCHAR | |
-
-### `etiquetas`
-| Campo | Tipo | Descripción |
-|-------|------|-------------|
-| id | INT PK | |
-| nombre | VARCHAR | Ej: "recreación", "deporte", "académico" |
-
-Catálogo fijo predefinido. Ejemplos: `recreación`, `deporte`, `académico`, `ambiental`, `tecnología`, `cultural`, `bienestar`
-
-### `candidato_etiquetas`
-| Campo | Tipo | Descripción |
-|-------|------|-------------|
-| candidato_id | INT FK | → candidatos |
-| etiqueta_id | INT FK | → etiquetas |
-
-Relación muchos a muchos. Un candidato puede tener varias etiquetas.
 
 ### `encuestas`
 | Campo | Tipo | Descripción |
@@ -282,17 +265,6 @@ numero_documento,nombre,apellido,fecha_nacimiento,genero,jornada,grupo_id
 4. **Participación por género** — masculino vs femenino vs otro
 5. **Participación por jornada** — mañana vs tarde
 
-### Análisis por etiqueta (solo encuestas tipo `candidatos`)
-El sistema cruza los votos recibidos con las etiquetas de cada candidato y suma automáticamente:
-
-- Juan Pérez (etiquetas: `recreación`, `deporte`) → 40 votos
-- Carlos Ruiz (etiquetas: `recreación`, `ambiental`) → 35 votos
-- Ana López (etiquetas: `académico`, `tecnología`) → 25 votos
-
-Resultado: `recreación` → 75 votos, `deporte` → 40, `ambiental` → 35, `académico` → 25...
-
-**Conclusión automática:** las propuestas con enfoque recreativo generaron más votación.
-
 ### Filtros en resultados (admin)
 El admin puede filtrar por jornada, género y grupo para responder preguntas como:
 - ¿Cómo votaron solo los estudiantes de jornada mañana?
@@ -309,22 +281,20 @@ El admin puede filtrar por jornada, género y grupo para responder preguntas com
 
 - [x] Estructura de carpetas definida
 - [x] Identidad visual definida
-- [x] Base de datos modelada (7 tablas)
+- [x] Base de datos modelada (6 tablas)
 - [x] Datos JSON simulados creados
 - [x] `styles.css` completo
 - [x] `app.js` con funciones compartidas
 - [x] Todas las páginas HTML creadas con layouts correctos
 - [x] Todos los archivos JS creados con lógica simulada y TODOs de backend
 - [x] Desacople completo JS/HTML (`addEventListener` — sin `onclick` en HTML)
-- [ ] Etiquetas de propuesta (pendiente en frontend y BD)
 - [ ] Estadísticas completas con filtros (pendiente)
 - [ ] Fase 2: Backend PHP + MySQL
 
 ## Próximos pasos
 
 1. ~~Desacoplar completamente JS del HTML~~ ✓ completado
-2. Agregar etiquetas al formulario de registro de candidatos
-3. Implementar pantalla de estadísticas completa con filtros y análisis por etiqueta
-4. Fase 2: crear archivos PHP que reemplacen los JSON simulados
-5. Fase 2: crear script SQL de la base de datos
-6. Generar historias de usuario al finalizar el código
+2. Implementar pantalla de estadísticas completa con filtros
+3. Fase 2: crear archivos PHP que reemplacen los JSON simulados
+4. Fase 2: crear script SQL de la base de datos
+5. Generar historias de usuario al finalizar el código
